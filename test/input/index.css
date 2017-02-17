@@ -1,0 +1,19 @@
+body {
+  font-size: 20px;
+}
+
+.some-element {
+  margin: 20px;
+}
+
+.some-element .inner-element {
+  text-align: center;
+}
+
+.some-element > .inner-element {
+  color: blue;
+}
+
+.non-existent {
+  padding: 10px;
+}

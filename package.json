@@ -4,7 +4,7 @@
   "description": "Remove unused selectors from CSS efficiently",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./test.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,8 @@
     "cut",
     "slim",
     "cheerio",
-    "postcss"
+    "postcss",
+    "postcss-runner"
   ],
   "author": "Tim Scanlin",
   "license": "MIT",
