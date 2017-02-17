@@ -1,0 +1,32 @@
+{
+  "name": "css-razor",
+  "version": "1.0.0",
+  "description": "Remove unused selectors from CSS efficiently",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tscanlin/css-razor.git"
+  },
+  "keywords": [
+    "css",
+    "razor",
+    "strip",
+    "cut",
+    "slim",
+    "cheerio",
+    "postcss"
+  ],
+  "author": "Tim Scanlin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tscanlin/css-razor/issues"
+  },
+  "homepage": "https://github.com/tscanlin/css-razor#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "postcss": "^5.2.13"
+  }
+}
