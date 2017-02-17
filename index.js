@@ -3,14 +3,6 @@ const postcss = require('postcss')
 const fs = require('fs')
 const defaultConfig = require('./config')
 
-// Steps
-// cli usage
-// output css to file or stdout
-// postcss usage
-// remove empty media queries
-// multiple files
-// promise and callback usage
-
 function cssRazor(config, cb) {
   config = Object.assign({}, defaultConfig, config)
   if (!config.inputHtml || !config.inputCss) {
@@ -32,8 +24,8 @@ function cssRazor(config, cb) {
             return root.walk((node) => {
               if (node.type === 'rule') {
                 const exists = checkExists(node, $)
-                const ignore = config.ignore.every((ignore) => {
-                  return node.selector.indexOf(config.ignore) !== -1
+                const ignore = config.ignore.some((ignore) => {
+                  return node.selector.indexOf(ignore) !== -1
                 })
                 if (!exists && !ignore) {
                   node.remove()
@@ -49,9 +41,6 @@ function cssRazor(config, cb) {
           if (config.outputFile) {
             fs.writeFile(config.outputFile, result.css)
           }
-          //  else if (process) {
-          //   process.stdout.write(result.css)
-          // }
         })
         .catch((e) => {
           console.log(e)
