@@ -4,6 +4,7 @@
 
 - output css to file or stdout
 - cli usage
+- tests for CLI
 
 - multiple files
 - postcss usage

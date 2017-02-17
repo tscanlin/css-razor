@@ -2,7 +2,7 @@
 
 const cssRazor = require('./index.js')
 
-if (process.argv) {
+if (process.argv && process.argv.length > 2) {
   let html, css
   process.argv.forEach((arg) => {
     if (arg.indexOf('.html') === arg.length - 5) {
@@ -19,4 +19,6 @@ if (process.argv) {
   }, (err, data) => {
     process.stdout.write(data.css)
   })
+} else {
+  throw new Error('You need to pass arguments to css-razor')
 }
