@@ -1,4 +1,6 @@
 module.exports = {
+  inputHtml: undefined,
+  inputCss: undefined,
   ignore: [
     'html',
     'body',
