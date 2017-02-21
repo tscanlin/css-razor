@@ -1,9 +1,19 @@
 module.exports = {
-  inputHtml: undefined,
-  inputCss: undefined,
+  htmlFiles: [],
+  cssFiles: [],
+  rawHtml: '',
+  rawCss: '',
   ignore: [
-    'html',
-    'body',
+    'html', // global
+    'body', // global
+    'active', // state
+    'inactive', // state
+    'collapsed', // state
+    'expanded', // state
+    'show', // state
+    'hide', // state
+    'hidden', // state
+    'is-', // state
   ],
-  outputFile: 'test/output/index.css',
+  outputFile: 'dist/index.css',
 }
