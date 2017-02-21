@@ -36,12 +36,11 @@ cssRazor({
 
 ## React Example
 
-...
+Coming soon!
 
 
 ## Todo
 
-- react example / test
+- react example
 - tests for raw and multi file
 - test for postcss plugin usage
-- promise usage

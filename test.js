@@ -11,6 +11,14 @@ cssRazor({
   console.assert(newCss === data.css)
 })
 
+console.log('It should return a promise')
+cssRazor({
+  htmlFiles: ['test/input/index.html'],
+  cssFiles: ['test/input/index.css'],
+}).then((data) => {
+  console.assert(newCss === data.css)
+})
+
 console.log('It should work for more complicated examples without throwing errors.')
 cssRazor({
   htmlFiles: ['test/input/tachyons.html'],
