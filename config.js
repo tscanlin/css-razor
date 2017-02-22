@@ -6,6 +6,7 @@ module.exports = {
   ignore: [
     'html', // global
     'body', // global
+    'button', // global
     'active', // state
     'inactive', // state
     'collapsed', // state

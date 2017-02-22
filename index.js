@@ -3,9 +3,6 @@ const postcss = require('postcss')
 const fs = require('fs')
 const defaultConfig = require('./config')
 
-// empty input
-// no files
-
 function cssRazor(config, callback) {
   config = Object.assign({}, defaultConfig, config)
 
@@ -32,8 +29,6 @@ function cssRazor(config, callback) {
         ])
         .process(css, { from: config.inputCss, to: config.outputFile })
         .then((result) => {
-          if (callback) callback(null, result)
-
           resolve(result)
 
           if (config.outputFile) {
@@ -41,11 +36,17 @@ function cssRazor(config, callback) {
           }
         })
         .catch((e) => {
-          console.log(e)
-          // return Promise.reject(e)
+          reject(e)
         })
     }
   })
+
+  // Enable callback support too.
+  if (callback) {
+    p.then((result) => {
+      callback(null, result)
+    })
+  }
 
   return p
 }

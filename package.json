@@ -7,7 +7,7 @@
     "css-razor": "./cli.js"
   },
   "scripts": {
-    "test": "node ./test.js"
+    "test": "lab ./index.test.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,9 @@
   "dependencies": {
     "cheerio": "^0.22.0",
     "postcss": "^5.2.13"
+  },
+  "devDependencies": {
+    "code": "^4.0.0",
+    "lab": "^12.1.0"
   }
 }
