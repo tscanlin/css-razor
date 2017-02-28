@@ -24,5 +24,7 @@ module.exports = {
   // Where to output
   outputFile: 'dist/index.css',
   // Disable output via stdout w/ `--no-stdout`.
-  stdout: true
+  stdout: true,
+  // Report Stats about used vs unused selectors.
+  report: false
 }

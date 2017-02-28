@@ -2,6 +2,7 @@ const cheerio = require('cheerio')
 const postcss = require('postcss')
 const fs = require('fs')
 const defaultConfig = require('./config')
+const DELIMITER = '  /  '
 
 function cssRazor(config, callback) {
   config = Object.assign({}, defaultConfig, config)
@@ -24,15 +25,16 @@ function cssRazor(config, callback) {
       postcss([
           postcssRazor({
             html: html,
-            ignore: config.ignore
+            ignore: config.ignore,
+            report: config.report
           })
         ])
         .process(css, { from: config.inputCss, to: config.outputFile })
         .then((result) => {
-          resolve(result)
-
           if (config.outputFile) {
-            fs.writeFile(config.outputFile, result.css)
+            fs.writeFile(config.outputFile, result.css, (err, d) => {
+              resolve(result)
+            })
           }
         })
         .catch((e) => {
@@ -53,9 +55,12 @@ function cssRazor(config, callback) {
 
 const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
   const html = opt.html
+  let keepCount = 0
+  let removeCount = 0
+  let removeSelectors = ''
   return (root) => {
     const $ = cheerio.load(html)
-    return root.walk((node) => {
+    root.walk((node) => {
       if (node.type === 'rule') {
         const exists = checkExists(node, $)
         const ignore = opt.ignore.some((ignore) => {
@@ -63,9 +68,21 @@ const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
         })
         if (!exists && !ignore) {
           node.remove()
+          removeSelectors += node.selector + DELIMITER
+          removeCount++
+        } else {
+          keepCount++
         }
       }
     })
+
+    if (opt.report) {
+      console.log('   Selectors kept: ' + keepCount)
+      console.log('Selectors removed: ' + removeCount)
+      console.log('  Percent removed: ' + removeCount / (keepCount + removeCount))
+      console.log(' ')
+      console.log('Removed selectors: ' + removeSelectors)
+    }
   }
 })
 
