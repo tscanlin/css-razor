@@ -1,13 +1,16 @@
 #!/usr/local/bin/node
 
-const cssRazor = require('./index.js')
+const cssRazor = require('./index.js').default
+const defaultConfig = require('./config.js')
+const argv = require('yargs')
+  .usage('Usage: $0 <command> [options]')
+  .argv;
 
 if (process.argv && process.argv.length > 2) {
-  const options = {}
-  options.htmlFiles = []
-  options.cssFiles = []
+  defaultConfig.outputFile = '' // Default to no output file over cli because of stdout.
+  const options = Object.assign({}, defaultConfig, argv)
 
-  process.argv.forEach((arg) => {
+  options._.forEach((arg, i) => {
     if (arg.indexOf('.html') === arg.length - 5) {
       options.htmlFiles.push(arg)
     } else if (arg.indexOf('.css') === arg.length - 4) {
@@ -17,7 +20,9 @@ if (process.argv && process.argv.length > 2) {
   })
 
   cssRazor(options, (err, data) => {
-    process.stdout.write(data.css)
+    if (options.stdout) {
+      process.stdout.write(data.css)
+    }
     // process.exit(0)
   })
 } else {

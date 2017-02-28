@@ -34,13 +34,41 @@ cssRazor({
 ```
 
 
-## React Example
+## React to HTML Example
 
-Coming soon!
+Below is an example of building an html file from a react app created with `create-react-app`. The resulting HTML file can then be used for server rendering and detecting selectors with css-razor.
+
+index.js:
+```js
+import App from './components/App'
+import './index.css'
+
+if (typeof window !== 'undefined') { // Web
+  ReactDOM.render(
+    <App />,
+    window.document.getElementById('root')
+  )
+} else { // Node / server render
+  global.appToRender = App
+}
+
+```
+
+buildStatic.js:
+```js
+const app = global.appToRender
+const markup = ReactDOM.renderToString(ReactDOM.createElement(app));
+
+const html = fs.readFileSync(HTML_FILE)
+const newHtml = html.toString().split('<div id="root"></div>').join(
+  '<div id="root">' + markup + '</div>'
+)
+
+fs.writeFileSync(HTML_FILE, newHtml, 'utf8')
+```
 
 
 ## Todo
 
-- react example
 - tests for raw and multi file
 - test for postcss plugin usage

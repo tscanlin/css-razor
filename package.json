@@ -31,7 +31,8 @@
   "homepage": "https://github.com/tscanlin/css-razor#readme",
   "dependencies": {
     "cheerio": "^0.22.0",
-    "postcss": "^5.2.13"
+    "postcss": "^5.2.13",
+    "yargs": "^6.6.0"
   },
   "devDependencies": {
     "code": "^4.0.0",

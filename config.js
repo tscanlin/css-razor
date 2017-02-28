@@ -1,8 +1,13 @@
 module.exports = {
+  // Array of HTML files.
   htmlFiles: [],
+  // Array of CSS files.
   cssFiles: [],
+  // Raw HTML string.
   rawHtml: '',
+  // Raw CSS string.
   rawCss: '',
+  // Strings in CSS classes to ignore.
   ignore: [
     'html', // global
     'body', // global
@@ -16,5 +21,8 @@ module.exports = {
     'hidden', // state
     'is-', // state
   ],
+  // Where to output
   outputFile: 'dist/index.css',
+  // Disable output via stdout w/ `--no-stdout`.
+  stdout: true
 }
