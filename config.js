@@ -1,12 +1,12 @@
 module.exports = {
-  // Array of HTML files.
-  htmlFiles: [],
-  // Array of CSS files.
-  cssFiles: [],
+  // Array of HTML file globs.
+  html: [],
+  // Array of CSS file globs.
+  css: [],
   // Raw HTML string.
-  rawHtml: '',
+  htmlRaw: '',
   // Raw CSS string.
-  rawCss: '',
+  cssRaw: '',
   // Strings in CSS classes to ignore.
   ignore: [
     'html', // global
@@ -24,7 +24,7 @@ module.exports = {
   // Where to output
   outputFile: 'dist/index.css',
   // Disable output via stdout w/ `--no-stdout`.
-  stdout: true,
+  stdout: false,
   // Report Stats about used vs unused selectors.
   report: false
 }

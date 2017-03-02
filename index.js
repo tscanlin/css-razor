@@ -1,25 +1,33 @@
 const cheerio = require('cheerio')
 const postcss = require('postcss')
 const fs = require('fs')
+const globby = require('globby')
 const defaultConfig = require('./config')
 const DELIMITER = '  /  '
 
 function cssRazor(config, callback) {
   config = Object.assign({}, defaultConfig, config)
 
-  if ( !( (config.rawHtml || config.htmlFiles.length) && (config.rawCss || config.cssFiles.length) ) ) {
+  if ( !( (config.htmlRaw || config.html.length) && (config.cssRaw || config.css.length) ) ) {
     throw new Error('You must include HTML and CSS for input.')
   }
 
   const p = new Promise(function(resolve, reject) {
-    let rawHtml = config.rawHtml
-    let rawCss = config.rawCss
+    let htmlRaw = config.htmlRaw
+    let cssRaw = config.cssRaw
 
-    getFiles(config.htmlFiles, (html) =>
-      getFiles(config.cssFiles, (css) =>
-        processInput(html + rawHtml, css + rawCss)
+    Promise.all([
+      globby(config.html),
+      globby(config.css)
+    ]).then((pathsArray) => {
+      const htmlFiles = pathsArray[0]
+      const cssFiles = pathsArray[1]
+      getTextFromFiles(htmlFiles, (html) =>
+        getTextFromFiles(cssFiles, (css) =>
+          processInput(html + htmlRaw, css + cssRaw)
+        )
       )
-    )
+    })
 
     function processInput(html, css) {
       postcss([
@@ -86,7 +94,7 @@ const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
   }
 })
 
-function getFiles(files, cb) {
+function getTextFromFiles(files, cb) {
   let text = ''
   if (files.length) {
     files.forEach((file, i) => {

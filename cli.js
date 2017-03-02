@@ -12,9 +12,9 @@ if (process.argv && process.argv.length > 2) {
 
   options._.forEach((arg, i) => {
     if (arg.indexOf('.html') === arg.length - 5) {
-      options.htmlFiles.push(arg)
+      options.html.push(arg)
     } else if (arg.indexOf('.css') === arg.length - 4) {
-      options.cssFiles.push(arg)
+      options.css.push(arg)
     }
     // TODO: Set more CLI options here.
   })

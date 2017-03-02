@@ -13,8 +13,8 @@ lab.experiment('css-razor', () => {
 
   lab.test('returns promise with used CSS based on input HTML & CSS', (done) => {
     cssRazor({
-      htmlFiles: ['test/input/index.html'],
-      cssFiles: ['test/input/index.css'],
+      html: ['test/input/index.html'],
+      css: ['test/input/index.css'],
       outputFile: 'test/output/index.css'
     }).then((data) => {
       Code.expect(data.css).to.equal(newCssSimple)
@@ -24,8 +24,8 @@ lab.experiment('css-razor', () => {
 
   lab.test('calls callback with used CSS based on input HTML & CSS', (done) => {
     cssRazor({
-      htmlFiles: ['test/input/index.html'],
-      cssFiles: ['test/input/index.css'],
+      html: ['test/input/index.html'],
+      css: ['test/input/index.css'],
       outputFile: 'test/output/index.css'
     }, function(err, data) {
       Code.expect(data.css).to.equal(newCssSimple)
@@ -35,8 +35,8 @@ lab.experiment('css-razor', () => {
 
   lab.test('returns promise with used CSS based on more complex input HTML & CSS', (done) => {
     cssRazor({
-      htmlFiles: ['test/input/tachyons.html'],
-      cssFiles: ['test/input/tachyons.min.css'],
+      html: ['test/input/tachyons.html'],
+      css: ['test/input/tachyons.min.css'],
       outputFile: 'test/output/tachyons.css'
     }).then((data) => {
       Code.expect(data.css).to.equal(newCssComplex)
