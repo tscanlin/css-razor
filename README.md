@@ -10,14 +10,22 @@ css-razor removes unused selectors. It accomplishes a similar task as uncss, but
 
 ## Getting Started
 
+Install with npm.
+
 ```bash
 npm install --save-dev css-razor
 ```
 
-You can then use the cli
+You can then use the cli.
 
 ```bash
-css-razor src/index.css src/index.html > index.smaller.css
+css-razor build/css/index.css build/index.html > build/css/index.min.css
+```
+
+And you can even pass multiple globs!
+
+```bash
+css-razor build/css/*.css build/*.html > build/css/index.min.css
 ```
 
 Or you can use the js api
@@ -26,11 +34,28 @@ Or you can use the js api
 const cssRazor = require('css-razor').default
 
 cssRazor({
-  htmlFiles: ['test/input/index.html'],
-  cssFiles: ['test/input/index.css'],
+  html: ['build/index.html'],
+  css: ['build/css/index.css'],
 }, function(err, data) {
   console.log(data.css)
 })
+```
+
+
+## Usage with Postcss
+
+```js
+const postcssRazor = require('css-razor').postcss
+
+postcss([
+    postcssRazor({
+      html: "<html>your html string</html>",
+    })
+  ])
+  .process(css, {
+    from: 'index.css',
+    to: 'output.css'
+  })
 ```
 
 
@@ -70,5 +95,6 @@ fs.writeFileSync(HTML_FILE, newHtml, 'utf8')
 
 ## Todo
 
-- tests for raw and multi file
+- tests for raw and globs
 - test for postcss plugin usage
+- support for http maybe?

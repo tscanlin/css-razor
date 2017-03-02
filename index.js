@@ -37,7 +37,10 @@ function cssRazor(config, callback) {
             report: config.report
           })
         ])
-        .process(css, { from: config.inputCss, to: config.outputFile })
+        .process(css, {
+          from: config.inputCss,
+          to: config.outputFile
+        })
         .then((result) => {
           if (config.outputFile) {
             fs.writeFile(config.outputFile, result.css, (err, d) => {
