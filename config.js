@@ -26,5 +26,7 @@ module.exports = {
   // Disable output via stdout w/ `--no-stdout`.
   stdout: false,
   // Report Stats about used vs unused selectors.
-  report: false
+  report: false,
+  // Overwrite the input css file if there is only one.
+  overwriteCss: false,
 }

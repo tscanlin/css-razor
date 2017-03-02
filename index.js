@@ -23,37 +23,42 @@ function cssRazor(config, callback) {
       const htmlFiles = pathsArray[0]
       const cssFiles = pathsArray[1]
       getTextFromFiles(htmlFiles, (html) =>
-        getTextFromFiles(cssFiles, (css) =>
-          processInput(html + htmlRaw, css + cssRaw)
-        )
+        getTextFromFiles(cssFiles, (css) => {
+          // TODO: Is there a better way to do this. I'd rather not nest it
+          // but I don't want to pass more args either!
+          function processInput(html, css) {
+            const outputFile = config.overwriteCss
+              ? cssFiles[0]
+              : config.outputFile
+            postcss([
+                postcssRazor({
+                  html: html,
+                  ignore: config.ignore,
+                  report: config.report
+                })
+              ])
+              .process(css, {
+                from: config.inputCss,
+                to: outputFile
+              })
+              .then((result) => {
+                if (outputFile) {
+                  fs.writeFile(outputFile, result.css, (err, d) => {
+                    resolve(result)
+                  })
+                } else {
+                  resolve(result)
+                }
+              })
+              .catch((e) => {
+                reject(e)
+              })
+          }
+
+          return processInput(html + htmlRaw, css + cssRaw)
+        })
       )
     })
-
-    function processInput(html, css) {
-      postcss([
-          postcssRazor({
-            html: html,
-            ignore: config.ignore,
-            report: config.report
-          })
-        ])
-        .process(css, {
-          from: config.inputCss,
-          to: config.outputFile
-        })
-        .then((result) => {
-          if (config.outputFile) {
-            fs.writeFile(config.outputFile, result.css, (err, d) => {
-              resolve(result)
-            })
-          } else {
-            resolve(result)
-          }
-        })
-        .catch((e) => {
-          reject(e)
-        })
-    }
   })
 
   // Enable callback support too.
