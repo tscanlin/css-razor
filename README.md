@@ -19,13 +19,13 @@ npm install --save-dev css-razor
 You can then use the cli.
 
 ```bash
-css-razor build/css/index.css build/index.html > build/css/index.min.css
+css-razor build/css/index.css build/index.html --stdout > build/css/index.min.css
 ```
 
 And you can even pass multiple globs!
 
 ```bash
-css-razor build/css/*.css build/*.html > build/css/index.min.css
+css-razor build/css/*.css build/*.html --stdout > build/css/index.min.css
 ```
 
 Or you can use the js api
