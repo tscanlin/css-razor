@@ -46,6 +46,8 @@ function cssRazor(config, callback) {
             fs.writeFile(config.outputFile, result.css, (err, d) => {
               resolve(result)
             })
+          } else {
+            resolve(result)
           }
         })
         .catch((e) => {
@@ -67,6 +69,7 @@ function cssRazor(config, callback) {
 const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
   const html = opt.html
   let keepCount = 0
+  let keepSelectors = ''
   let removeCount = 0
   let removeSelectors = ''
   return (root) => {
@@ -82,17 +85,21 @@ const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
           removeSelectors += node.selector + DELIMITER
           removeCount++
         } else {
+          keepSelectors += node.selector + DELIMITER
           keepCount++
         }
       }
     })
 
     if (opt.report) {
+      const percent = ((removeCount / (keepCount + removeCount)) * 100).toFixed()
       console.log('   Selectors kept: ' + keepCount)
       console.log('Selectors removed: ' + removeCount)
-      console.log('  Percent removed: ' + removeCount / (keepCount + removeCount))
+      console.log('  Percent removed: ' + percent + '%')
       console.log(' ')
       console.log('Removed selectors: ' + removeSelectors)
+      console.log(' ')
+      console.log('   Kept selectors: ' + keepSelectors)
     }
   }
 })
