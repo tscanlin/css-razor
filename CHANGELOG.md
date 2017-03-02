@@ -1,11 +1,21 @@
 ### Unreleased
 ...
 
+- add overwriteCss option to overwrite the first input CSS file
 
-### 2.0.0
+
+### 2.1.1
+
+#### Fixed
+- fix cli when no output file specified and report improvements
+
+
+### 2.1.0
 
 #### Added
-- Support for passing glob patterns.
+- More docs & examples
+- CHANGELOG.md
+- Support for passing glob patterns
 
 
 ### 2.0.0
