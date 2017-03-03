@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/usr/bin/env node
 
 const cssRazor = require('./index.js').default
 const defaultConfig = require('./config.js')
