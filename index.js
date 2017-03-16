@@ -4,6 +4,10 @@ const cheerio = require('cheerio')
 const postcss = require('postcss')
 const fs = require('fs')
 const globby = require('globby')
+
+require('es6-promise').polyfill()
+require('isomorphic-fetch')
+
 const defaultConfig = require('./config')
 const DELIMITER = ' || '
 
@@ -12,7 +16,7 @@ function cssRazor(config, callback) {
   config = Object.assign({}, defaultConfig, config)
   config.ignore = ignoreList
 
-  if ( !( (config.htmlRaw || config.html.length) && (config.cssRaw || config.css.length) ) ) {
+  if ( !( (config.htmlRaw || config.html.length || config.webpages.length) && (config.cssRaw || config.css.length) ) ) {
     throw new Error('You must include HTML and CSS for input.')
   }
 
@@ -26,41 +30,43 @@ function cssRazor(config, callback) {
     ]).then((pathsArray) => {
       const htmlFiles = pathsArray[0]
       const cssFiles = pathsArray[1]
-      getTextFromFiles(htmlFiles, (html) =>
-        getTextFromFiles(cssFiles, (css) => {
-          // TODO: Is there a better way to do this. I'd rather not nest it
-          // but I don't want to pass more args either.
-          function processInput(html, css) {
-            const outputFile = config.overwriteCss
-              ? cssFiles[0]
-              : config.outputFile
-            postcss([
-                postcssRazor({
-                  html: html,
-                  ignore: config.ignore,
-                  report: config.report
-                })
-              ])
-              .process(css, {
-                from: config.inputCss,
-                to: outputFile
-              })
-              .then((result) => {
-                if (outputFile) {
-                  fs.writeFile(outputFile, result.css, (err, d) => {
-                    resolve(result)
+      getTextFromUrls(config.webpages, (webHtml) =>
+        getTextFromFiles(htmlFiles, (html) =>
+          getTextFromFiles(cssFiles, (css) => {
+            // TODO: Is there a better way to do this. I'd rather not nest it
+            // but I don't want to pass more args either.
+            function processInput(html, css) {
+              const outputFile = config.overwriteCss
+                ? cssFiles[0]
+                : config.outputFile
+              postcss([
+                  postcssRazor({
+                    html: html,
+                    ignore: config.ignore,
+                    report: config.report
                   })
-                } else {
-                  resolve(result)
-                }
-              })
-              .catch((e) => {
-                reject(e)
-              })
-          }
+                ])
+                .process(css, {
+                  from: config.inputCss,
+                  to: outputFile
+                })
+                .then((result) => {
+                  if (outputFile) {
+                    fs.writeFile(outputFile, result.css, (err, d) => {
+                      resolve(result)
+                    })
+                  } else {
+                    resolve(result)
+                  }
+                })
+                .catch((e) => {
+                  reject(e)
+                })
+            }
 
-          return processInput(html + htmlRaw, css + cssRaw)
-        })
+            return processInput(html + htmlRaw + webHtml, css + cssRaw)
+          })
+        )
       )
     })
   })
@@ -127,6 +133,30 @@ function getTextFromFiles(files, cb) {
         }
       })
     })
+  } else {
+    cb(text)
+  }
+}
+
+function getTextFromUrls(urls, cb) {
+  let text = ''
+  if (urls.length) {
+    urls.forEach((file, i) => {
+      fetch(file).then(function(response) {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            return response.text();
+        }).then(function(responseText) {
+          text += responseText
+
+          if (i === urls.length - 1) {
+            cb(text)
+          }
+        })
+    })
+  } else {
+    cb(text)
   }
 }
 

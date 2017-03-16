@@ -7,7 +7,7 @@
     "css-razor": "./cli.js"
   },
   "scripts": {
-    "test": "lab ./index.test.js"
+    "test": "lab ./index.test.js --ignore fetch,Response,Headers,Request"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,9 @@
   "homepage": "https://github.com/tscanlin/css-razor#readme",
   "dependencies": {
     "cheerio": "^0.22.0",
+    "es6-promise": "^4.1.0",
     "globby": "^6.1.0",
+    "isomorphic-fetch": "^2.2.1",
     "postcss": "^5.2.13",
     "yargs": "^6.6.0"
   },

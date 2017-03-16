@@ -7,6 +7,8 @@ module.exports = {
   htmlRaw: '',
   // Raw CSS string.
   cssRaw: '',
+  // Array of webpages to add to HTML.
+  webpages: [],
   // Strings in CSS classes to ignore.
   ignore: [
     'html', // global element
