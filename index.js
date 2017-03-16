@@ -5,10 +5,12 @@ const postcss = require('postcss')
 const fs = require('fs')
 const globby = require('globby')
 const defaultConfig = require('./config')
-const DELIMITER = '  /  '
+const DELIMITER = ' || '
 
 function cssRazor(config, callback) {
+  const ignoreList = defaultConfig.ignore.concat(config.ignore)
   config = Object.assign({}, defaultConfig, config)
+  config.ignore = ignoreList
 
   if ( !( (config.htmlRaw || config.html.length) && (config.cssRaw || config.css.length) ) ) {
     throw new Error('You must include HTML and CSS for input.')
@@ -27,7 +29,7 @@ function cssRazor(config, callback) {
       getTextFromFiles(htmlFiles, (html) =>
         getTextFromFiles(cssFiles, (css) => {
           // TODO: Is there a better way to do this. I'd rather not nest it
-          // but I don't want to pass more args either!
+          // but I don't want to pass more args either.
           function processInput(html, css) {
             const outputFile = config.overwriteCss
               ? cssFiles[0]
@@ -104,9 +106,11 @@ const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
       console.log('Selectors removed: ' + removeCount)
       console.log('  Percent removed: ' + percent + '%')
       console.log(' ')
-      console.log('Removed selectors: ' + removeSelectors)
-      console.log(' ')
-      console.log('   Kept selectors: ' + keepSelectors)
+      if (opt.reportDetails) {
+        console.log('Removed selectors: ' + removeSelectors)
+        console.log(' ')
+        console.log('   Kept selectors: ' + keepSelectors)
+      }
     }
   }
 })

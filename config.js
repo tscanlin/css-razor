@@ -9,17 +9,18 @@ module.exports = {
   cssRaw: '',
   // Strings in CSS classes to ignore.
   ignore: [
-    'html', // global
-    'body', // global
-    'button', // global
-    'active', // state
-    'inactive', // state
-    'collapsed', // state
-    'expanded', // state
-    'show', // state
-    'hide', // state
-    'hidden', // state
-    'is-', // state
+    'html', // global element
+    'body', // global element
+    'button', // global element
+
+    'active', // state class
+    'inactive', // state class
+    'collapsed', // state class
+    'expanded', // state class
+    'show', // state class
+    'hide', // state class
+    'hidden', // state class
+    'is-', // state class
   ],
   // Where to output
   outputFile: 'dist/index.css',
@@ -27,6 +28,8 @@ module.exports = {
   stdout: false,
   // Report Stats about used vs unused selectors.
   report: false,
+  // Detailed Report Stats including every selector used vs unused.
+  reportDetails: false,
   // Overwrite the input css file if there is only one.
   overwriteCss: false,
 }
