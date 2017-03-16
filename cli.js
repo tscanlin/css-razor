@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 const cssRazor = require('./index.js').default
-const defaultConfig = require('./config.js')
+const defaultOptions = require('./defaultOptions.js')
 const argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
   .argv;
 
 if (process.argv && process.argv.length > 2) {
-  defaultConfig.outputFile = '' // Default to no output file over cli because of stdout.
-  const options = Object.assign({}, defaultConfig, argv)
+  defaultOptions.outputFile = '' // Default to no output file over cli because of stdout.
+  const options = Object.assign({}, defaultOptions, argv)
 
   options._.forEach((arg, i) => {
     if (arg.indexOf('.html') === arg.length - 5) {

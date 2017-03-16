@@ -8,46 +8,46 @@ const globby = require('globby')
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
-const defaultConfig = require('./config')
+const defaultOptions = require('./defaultOptions')
 const DELIMITER = ' || '
 
-function cssRazor(config, callback) {
-  const ignoreList = defaultConfig.ignore.concat(config.ignore)
-  config = Object.assign({}, defaultConfig, config)
-  config.ignore = ignoreList
+function cssRazor(options, callback) {
+  const ignoreList = defaultOptions.ignore.concat(options.ignore)
+  options = Object.assign({}, defaultOptions, options)
+  options.ignore = ignoreList
 
-  if ( !( (config.htmlRaw || config.html.length || config.webpages.length) && (config.cssRaw || config.css.length) ) ) {
+  if ( !( (options.htmlRaw || options.html.length || options.webpages.length) && (options.cssRaw || options.css.length) ) ) {
     throw new Error('You must include HTML and CSS for input.')
   }
 
   const p = new Promise(function(resolve, reject) {
-    let htmlRaw = config.htmlRaw
-    let cssRaw = config.cssRaw
+    let htmlRaw = options.htmlRaw
+    let cssRaw = options.cssRaw
 
     Promise.all([
-      globby(config.html),
-      globby(config.css)
+      globby(options.html),
+      globby(options.css)
     ]).then((pathsArray) => {
       const htmlFiles = pathsArray[0]
       const cssFiles = pathsArray[1]
-      getTextFromUrls(config.webpages, (webHtml) =>
+      getTextFromUrls(options.webpages, (webHtml) =>
         getTextFromFiles(htmlFiles, (html) =>
           getTextFromFiles(cssFiles, (css) => {
             // TODO: Is there a better way to do this. I'd rather not nest it
             // but I don't want to pass more args either.
             function processInput(html, css) {
-              const outputFile = config.overwriteCss
+              const outputFile = options.overwriteCss
                 ? cssFiles[0]
-                : config.outputFile
+                : options.outputFile
               postcss([
                   postcssRazor({
                     html: html,
-                    ignore: config.ignore,
-                    report: config.report
+                    ignore: options.ignore,
+                    report: options.report
                   })
                 ])
                 .process(css, {
-                  from: config.inputCss,
+                  from: options.inputCss,
                   to: outputFile
                 })
                 .then((result) => {

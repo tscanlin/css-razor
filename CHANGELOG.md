@@ -4,6 +4,20 @@
 - add overwriteCss option to overwrite the first input CSS file
 
 
+### 2.2.0
+
+#### Added
+- reportDetails option for all selectors to be listed
+- get travis-ci working
+- add webpages option
+
+#### Updated
+- rename config.js to defaultOptions.js
+- refactor tests
+- update readme
+- ignore option appends by default
+
+
 ### 2.1.1
 
 #### Fixed
