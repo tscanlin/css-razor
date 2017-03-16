@@ -2,13 +2,16 @@
 
 ![Build Status](https://travis-ci.org/tscanlin/css-razor.svg?branch=master)
 
-css-razor removes unused styles from css. It accomplishes the same goal as [uncss](https://github.com/giakki/uncss). However, it accomplishes this goal differently. Rather than loading a webpage in phantomjs and using `document.querySelector` to determine if a selector is being used, css-razor uses [cheeriojs](https://github.com/cheeriojs/cheerio) to parse static html and css files to removed unused selectors.
+css-razor is a fast way to remove unused selectors from css. Essentially, it accomplishes the same goal as [uncss](https://github.com/giakki/uncss). However, it accomplishes this goal differently. Rather than loading a webpage in phantomjs and using `document.querySelector` to determine if a selector is being used, css-razor uses [cheeriojs](https://github.com/cheeriojs/cheerio) to parse static html and css files to removed unused selectors.
 
 - Helps trim down CSS so you only keep the necessary parts
 - Built for speed using the amazing  [cheeriojs](https://github.com/cheeriojs/cheerio)
+- has an ignore list that can be added to
+- ignores common pseudo elements & pseudo selectors by default
 - Supports multiple files / globs
-- Supports raw input
-- Open to adding new features, just open an issue
+- Supports raw html & css input
+- Supports html paths from URLs
+- Reporting stats detailing how many selectors are removed.
 
 
 ## Getting Started
