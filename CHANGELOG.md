@@ -1,8 +1,6 @@
 ### Unreleased
 ...
 
-- add overwriteCss option to overwrite the first input CSS file
-
 
 ### 2.3.0
 
