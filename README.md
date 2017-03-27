@@ -84,6 +84,7 @@ module.exports = {
   // Report Stats about used vs unused selectors.
   report: false,
   // Detailed Report Stats including every selector used vs unused.
+  // Note: this also depends on the `report` option being true.
   reportDetails: false,
   // Overwrite the input css file if there is only one.
   overwriteCss: false,
