@@ -12,7 +12,10 @@ const defaultOptions = require('./defaultOptions')
 const DELIMITER = ' || '
 
 function cssRazor(options, callback) {
-  const ignoreList = defaultOptions.ignore.concat(options.ignore)
+  let ignoreList = []
+  if (typeof options.ignore === 'undefined') {
+    ignoreList = defaultOptions.ignore.concat(options.ignore)  
+  }
   options = Object.assign({}, defaultOptions, options)
   options.ignore = ignoreList
 

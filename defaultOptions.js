@@ -9,7 +9,8 @@ module.exports = {
   cssRaw: '',
   // Array of webpages to add to HTML.
   webpages: [],
-  // Strings in CSS classes to ignore.
+  // Strings in CSS classes to ignore. Pass `false`
+  // (or `--no-ignore` via cli) to not ignore these.
   ignore: [
     'html', // global element
     'body', // global element
