@@ -23,7 +23,7 @@ module.exports = {
     'show', // state class
     'hide', // state class
     'hidden', // state class
-    'is-', // state class
+    'is-' // state class
   ],
   // Where to output
   outputFile: 'dist/index.css',
@@ -35,5 +35,5 @@ module.exports = {
   // Note: this also depends on the `report` option being true.
   reportDetails: false,
   // Overwrite the input css file if there is only one.
-  overwriteCss: false,
+  overwriteCss: false
 }

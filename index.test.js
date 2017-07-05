@@ -9,7 +9,6 @@ const spawn = require('child_process').spawn
 const testResults = require('./test/results.js')
 
 lab.experiment('css-razor', () => {
-
   lab.test('returns promise with used CSS based on input HTML & CSS', (done) => {
     cssRazor({
       html: ['test/input/index.html'],
@@ -26,7 +25,10 @@ lab.experiment('css-razor', () => {
       html: ['test/input/index.html'],
       css: ['test/input/index.css'],
       outputFile: 'test/output/index.css'
-    }, function(err, data) {
+    }, function (err, data) {
+      if (err) {
+        console.error(err)
+      }
       Code.expect(data.css.split('\r').join('')).to.equal(testResults.simpleCss)
       done()
     })
@@ -48,7 +50,10 @@ lab.experiment('css-razor', () => {
       webpages: ['http://blog.timscanlin.net/'],
       css: ['test/input/tachyons.min.css'],
       outputFile: 'test/output/tachyons.css'
-    }, function(err, data) {
+    }, function (err, data) {
+      if (err) {
+        console.error(err)
+      }
       Code.expect(data.css.split('\r').join('')).to.equal(testResults.complexHttpCss)
       done()
     })
@@ -58,7 +63,7 @@ lab.experiment('css-razor', () => {
     const cli = spawn('node', [
       './cli.js',
       'test/input/index.html',
-      'test/input/index.css',
+      'test/input/index.css'
     ])
 
     cli.stdout.on('data', (data) => {
@@ -78,5 +83,4 @@ lab.experiment('css-razor', () => {
   // raw
   // postcss
   // set output file
-
 })

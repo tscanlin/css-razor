@@ -7,7 +7,12 @@
     "css-razor": "./cli.js"
   },
   "scripts": {
-    "test": "lab ./index.test.js --ignore fetch,Response,Headers,Request"
+    "lint": "standard --globals=fetch",
+    "test:unit": "lab ./index.test.js --ignore fetch,Response,Headers,Request",
+    "test": "npm run lint && npm run test:unit",
+    "v-patch": "npm version patch && git push --tags && npm publish && git push",
+    "v-minor": "npm version minor && git push --tags && npm publish && git push",
+    "v-major": "npm version major && git push --tags && npm publish && git push"
   },
   "repository": {
     "type": "git",
@@ -34,11 +39,13 @@
     "es6-promise": "^4.1.0",
     "globby": "^6.1.0",
     "isomorphic-fetch": "^2.2.1",
+    "mkdirp": "^0.5.1",
     "postcss": "^5.2.13",
     "yargs": "^6.6.0"
   },
   "devDependencies": {
     "code": "^4.0.0",
-    "lab": "^12.1.0"
+    "lab": "^12.1.0",
+    "standard": "^10.0.2"
   }
 }

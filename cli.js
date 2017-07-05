@@ -4,7 +4,7 @@ const cssRazor = require('./index.js').default
 const defaultOptions = require('./defaultOptions.js')
 const argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .argv;
+  .argv
 
 if (process.argv && process.argv.length > 2) {
   defaultOptions.outputFile = '' // Default to no output file over cli because of stdout.
@@ -20,10 +20,14 @@ if (process.argv && process.argv.length > 2) {
   })
 
   cssRazor(options, (err, data) => {
+    if (err) {
+      process.stderr.write(err)
+      process.exit(1)
+    }
     if (options.stdout) {
       process.stdout.write(data.css)
+      process.exit(0)
     }
-    // process.exit(0)
   })
 } else {
   throw new Error('You need to pass arguments to css-razor')
