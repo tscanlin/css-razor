@@ -16,7 +16,7 @@ lab.experiment('css-razor', () => {
       css: ['test/input/index.css'],
       outputFile: 'test/output/index.css'
     }).then((data) => {
-      Code.expect(data.css).to.equal(testResults.simpleCss)
+      Code.expect(data.css.split('\r').join('')).to.equal(testResults.simpleCss)
       done()
     })
   })
@@ -27,7 +27,7 @@ lab.experiment('css-razor', () => {
       css: ['test/input/index.css'],
       outputFile: 'test/output/index.css'
     }, function(err, data) {
-      Code.expect(data.css).to.equal(testResults.simpleCss)
+      Code.expect(data.css.split('\r').join('')).to.equal(testResults.simpleCss)
       done()
     })
   })
@@ -38,7 +38,7 @@ lab.experiment('css-razor', () => {
       css: ['test/input/tachyons.min.css'],
       outputFile: 'test/output/tachyons.css'
     }).then((data) => {
-      Code.expect(data.css).to.equal(testResults.complexCss)
+      Code.expect(data.css.split('\r').join('')).to.equal(testResults.complexCss)
       done()
     })
   })
@@ -49,19 +49,20 @@ lab.experiment('css-razor', () => {
       css: ['test/input/tachyons.min.css'],
       outputFile: 'test/output/tachyons.css'
     }, function(err, data) {
-      Code.expect(data.css).to.equal(testResults.complexHttpCss)
+      Code.expect(data.css.split('\r').join('')).to.equal(testResults.complexHttpCss)
       done()
     })
   })
 
   lab.test('CLI returns used CSS based on input HTML & CSS', (done) => {
-    const cli = spawn('./cli.js', [
+    const cli = spawn('node', [
+      './cli.js',
       'test/input/index.html',
       'test/input/index.css',
     ])
 
     cli.stdout.on('data', (data) => {
-      Code.expect(data.toString()).to.equal(testResults.simpleCss)
+      Code.expect(data.toString().split('\r').join('')).to.equal(testResults.simpleCss)
     })
 
     cli.on('close', (code) => {

@@ -106,6 +106,13 @@ const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
       }
     })
 
+    // Remove empty media queries.
+    root.walkAtRules((rule) => {
+      if (rule.nodes.length === 0) {
+        rule.remove()
+      }
+    });
+
     if (opt.report) {
       const percent = ((removeCount / (keepCount + removeCount)) * 100).toFixed()
       console.log('   Selectors kept: ' + keepCount)

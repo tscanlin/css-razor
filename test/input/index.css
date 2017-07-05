@@ -17,3 +17,9 @@ body {
 .non-existent {
   padding: 10px;
 }
+
+@media screen and (min-width > 200px) {
+  .nothing {
+    font-weight: bold;
+  }
+}
