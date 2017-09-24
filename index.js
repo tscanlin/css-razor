@@ -122,7 +122,7 @@ const postcssRazor = postcss.plugin('postcss-razor', (opt) => {
 
     // Remove empty media queries.
     root.walkAtRules((rule) => {
-      if (rule.nodes.length === 0) {
+      if (typeof rule.nodes === 'undefined' || rule.nodes.length === 0) {
         rule.remove()
       }
     })
