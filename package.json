@@ -1,6 +1,6 @@
 {
   "name": "css-razor",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Remove unused selectors from CSS efficiently",
   "main": "index.js",
   "bin": {
