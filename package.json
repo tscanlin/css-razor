@@ -8,7 +8,7 @@
   },
   "scripts": {
     "lint": "standard --globals=fetch",
-    "test:unit": "lab ./index.test.js --ignore fetch,Response,Headers,Request",
+    "test:unit": "lab ./index.test.js --ignore fetch,Response,Headers,Request,Base64",
     "test": "npm run lint && npm run test:unit",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
     "v-minor": "npm version minor && git push --tags && npm publish && git push",
