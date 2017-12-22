@@ -89,7 +89,7 @@ function cssRazor (options, callback) {
   if (callback) {
     p.then((result) => {
       callback(null, result)
-    })
+    }).catch(err => callback(err))
   }
 
   return p
